@@ -1,0 +1,69 @@
+.todo-item {
+  display: grid;
+  grid-template-columns: 1fr .45fr 24px 24px;
+  align-items: center;
+  gap: 14px;
+}
+
+.todo-item__title {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #0D0D0D;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.todo-item__title span {
+  display: block;
+  font-size: 14px;
+  line-height: 17px;
+  color: #888888;
+}
+
+.todo-item__duration {
+  font-size: 14px;
+  line-height: 17px;
+  color: #0D0D0D;
+}
+
+.task-done {
+  display: flex;
+  align-items: center;
+}
+
+.task-done input {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-done span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #20EEB0;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+  transition: background .2s ease, border .2s ease;
+}
+
+.task-done input:checked+span {
+  background: #1BCF8F;
+  border-color: #1BCF8F;
+}
+
+.task-done input:not(:checked)+span:hover {
+  border-width: 5px;
+}
+
+.todo-item__remove {
+  stroke: #FF4545;
+  transition: stroke .2s ease;
+}
+
+.todo-item__remove:hover path {
+  stroke: #bf0505;
+}
