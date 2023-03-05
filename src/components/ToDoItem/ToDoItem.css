@@ -3,6 +3,7 @@
   grid-template-columns: 1fr .45fr 24px 24px;
   align-items: center;
   gap: 14px;
+  transition: opacity .2s ease;
 }
 
 .todo-item__title {
