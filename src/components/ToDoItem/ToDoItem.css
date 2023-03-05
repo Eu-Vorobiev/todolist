@@ -67,3 +67,9 @@
 .todo-item__remove:hover path {
   stroke: #bf0505;
 }
+
+@media screen and (max-width: 476px) {
+  .todo-item {
+    grid-template-columns: 1fr .2fr 24px 24px;
+  }
+}
