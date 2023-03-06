@@ -1,9 +1,8 @@
 .todo-list {
-  margin-top: 40px;
+  margin: 40px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 36px;
 }
 
 .todo-add {
@@ -11,6 +10,7 @@
   grid-template-columns: 1fr .5fr 60px;
   gap: 12px 10px;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .todo-add input {

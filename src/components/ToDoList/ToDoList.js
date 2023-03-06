@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import './ToDoList.css';
 import ToDoItem from '../ToDoItem/ToDoItem';
+import InfoPanel from '../InfoPanel/InfoPanel';
 
 function ToDoList({tasks, addTask, removeTask, completeTask}) {
   const [title, setTitle] = useState('');
@@ -44,6 +45,7 @@ function ToDoList({tasks, addTask, removeTask, completeTask}) {
         </label>
         <button type='button' onClick={onAddTask} >+</button>
       </div>
+      <InfoPanel tasks={tasks} />
       <ul className='list'>
         {
           tasks.length !== 0 ?
