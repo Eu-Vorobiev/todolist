@@ -1,12 +1,10 @@
 import './InfoPanel.css';
 
-function InfoPanel({tasks }) {
-  return ( 
-    <div className="info-panel">
-      <span>Total taks: {tasks.length}</span>
-      <span>Total time: </span>
-    </div>
-  );
+export default function InfoPanel({ tasks, totalTime }) {
+    return (
+        <div className="info-panel">
+            <span>Total tasks: {tasks.length}</span>
+            <span>Total time: {totalTime}h</span>
+        </div>
+    );
 }
-
-export default InfoPanel;

@@ -3,7 +3,14 @@
   grid-template-columns: 1fr .45fr 24px 24px;
   align-items: center;
   gap: 14px;
-  transition: opacity .2s ease;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color .2s ease;
+
+  &.completed {
+    background-color: #b8efdf;
+  }
 }
 
 .todo-item__title {

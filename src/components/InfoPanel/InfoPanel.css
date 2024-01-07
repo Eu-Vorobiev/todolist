@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr .65fr;
   gap: 12px 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .info-panel span {

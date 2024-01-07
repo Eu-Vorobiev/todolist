@@ -1,44 +1,62 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from './components/Header/Header';
 import Container from './components/Container/Container';
 import ToDoList from './components/ToDoList/ToDoList';
 import { getDate } from './components/Date/Date';
 
-function App() {
-  const [tasks, setTasks] = useState([]);
-  const { hours, minutes, ampm } = getDate();
-  
-  const addTask = ({ title, duration, completed = false }) => {
-    let dividedDuration = duration / 60;
-    let formattedDuration = duration >= 10 ? dividedDuration.toFixed(2) : duration;
+export default function App() {
+    const [tasks, setTasks] = useState([]);
+    const { hours, minutes, ampm } = getDate();
+    const [duration, setDuration] = useState(0);
+    let [totalTime, setTotalTime] = useState(0);
 
-    let formattedDate = '';
-    formattedDate = `${hours}:${minutes} ${ampm}`;
-    
-    let newTask = { id: Math.random(), title: title, duration: formattedDuration+'h', date: formattedDate, completed: completed }
-    let newTasks = [newTask, ...tasks];
-    setTasks(newTasks);
-  }
-  
-  const removeTask = (id) => {
-    let newTasks = tasks.filter(task => task.id !== id);
-    setTasks(newTasks);
-  }
+    const addTask = ({ title, duration, completed = false }) => {
+        let dividedDuration = duration / 60;
+        let formattedDuration = duration >= 10 ? parseFloat(dividedDuration.toFixed(2)) : Number(duration);
+        let formattedDate = `${hours}:${minutes} ${ampm}`;
 
-  const completeTask = (task) => {
-    let newTasks = [...tasks];
-    task.completed = !task.completed;
-    setTasks(newTasks);
-  }
+        let newTask = {
+            id: Math.random(),
+            title,
+            duration: formattedDuration,
+            date: formattedDate,
+            completed,
+        };
+        let newTasks = [newTask, ...tasks];
+        setTasks(newTasks);
+        setTotalTime(totalTime + formattedDuration);
+        setDuration('');
+    };
 
-  return (
-    <>
-      <Header />
-      <Container>
-        <ToDoList tasks={tasks} addTask={addTask} removeTask={removeTask} completeTask={completeTask} />
-      </Container>
-    </>
-  );
+    const removeTask = ( task ) => {
+        let newTasks = tasks.filter((taskFromFilter) => taskFromFilter.id !== task.id);
+        setTasks(newTasks);
+        let newTotalTime = (totalTime - task.duration).toFixed(2);
+        setTotalTime(parseFloat(newTotalTime));
+    };
+
+    const completeTask = (task) => {
+        let newTasks = [...tasks];
+        task.completed = !task.completed;
+        setTasks(newTasks);
+    };
+
+    const durationHandler = e => setDuration(parseInt(e.currentTarget.value));
+
+    return (
+        <>
+            <Header />
+            <Container>
+                <ToDoList
+                    tasks={tasks}
+                    addTask={addTask}
+                    removeTask={removeTask}
+                    completeTask={completeTask}
+                    duration={duration}
+                    durationHandler={durationHandler}
+                    totalTime={totalTime}
+                />
+            </Container>
+        </>
+    );
 }
-
-export default App;
