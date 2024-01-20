@@ -16,11 +16,12 @@
     font-size: 16px;
     line-height: 19px;
     color: #544f4f;
-    transition: border-color .2s ease;
+    transition: border-color .3s ease-in-out, background-color .3s ease-in-out, color .3s ease-in-out;
 }
 
 .todo-add input::placeholder {
     color: #888888;
+    transition: color .3s ease-in-out;
 }
 
 @media (any-hover: hover) {
@@ -40,8 +41,8 @@
     justify-content: center;
     font-size: 30px;
     line-height: 19px;
-    color: #fff;
-    transition: background .2s ease;
+    color: var(--white);
+    transition: background .3s ease-in-out;
 }
 
 .todo-add button:hover {
@@ -56,4 +57,27 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+/* Dark theme */
+.dark-theme .todo-add input {
+    background-color: var(--greenDark);
+    color: var(--light);
+}
+
+.dark-theme .todo-add input::placeholder {
+    color: var(--light);
+}
+
+@media (any-hover: hover) {
+
+    .dark-theme .todo-add input:hover,
+    .dark-theme .todo-add input:focus {
+        border-color: var(--light);
+    }
+}
+
+.dark-theme .todo-add input:hover,
+.dark-theme .todo-add input:focus {
+    border-color: var(--light);
 }

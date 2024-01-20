@@ -1,6 +1,6 @@
 import './AddPanel.css';
 
-export default function AddPanel({ title, duration, titleHandler, durationHandler, onAddTask, onKeyPressHandler, firstInputFocusRef }) {
+const AddPanel = ({ title, duration, titleHandler, durationHandler, onAddTask, onKeyPressHandler, firstInputFocusRef }) => {
     return (
         <div className="todo-add">
             <label htmlFor="task">
@@ -29,3 +29,5 @@ export default function AddPanel({ title, duration, titleHandler, durationHandle
         </div>
     );
 }
+
+export default AddPanel;

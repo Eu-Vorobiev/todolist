@@ -1,83 +1,104 @@
-.todo-item {
-  display: grid;
-  grid-template-columns: 1fr .45fr 24px 24px;
-  align-items: center;
-  gap: 14px;
-  padding: 4px 10px;
-  border-radius: 5px;
-  background-color: transparent;
-  transition: background-color .2s ease;
+:root {
+    --black: #0D0D0D;
+}
 
-  &.completed {
-    background-color: #b8efdf;
-  }
+.todo-item {
+    display: grid;
+    grid-template-columns: 1fr .45fr 24px 24px;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--black);
+    transition: background-color .3s ease-in-out, color .3s ease-in-out;
+
+    &.completed {
+        background-color: #b8efdf;
+    }
 }
 
 .todo-item__title {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
-  color: #0D0D0D;
-  margin: 0;
-  margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
+    margin-bottom: 5px;
 }
 
 .todo-item__title span {
-  display: block;
-  font-size: 12px;
-  line-height: 16px;
-  color: #888888;
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+    color: #888888;
+    transition: color .3s ease-in-out;
 }
 
 .todo-item__duration {
-  font-size: 14px;
-  line-height: 17px;
-  color: #0D0D0D;
+    font-size: 14px;
+    line-height: 17px;
 }
 
 .task-done {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .task-done input {
-  appearance: none;
-  margin: 0;
-  padding: 0;
+    appearance: none;
+    margin: 0;
+    padding: 0;
 }
 
 .task-done span {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #20EEB0;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-  margin: 0;
-  transition: background .2s ease, border .2s ease;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #20EEB0;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+    transition: background .3s ease-in-out, border .3s ease-in-out;
 }
 
 .task-done input:checked+span {
-  background: #1BCF8F;
-  border-color: #1BCF8F;
+    background: var(--green);
+    border-color: var(--green);
 }
 
 .task-done input:not(:checked)+span:hover {
-  border-width: 5px;
+    border-width: 5px;
 }
 
 .todo-item__remove {
-  stroke: #FF4545;
-  transition: stroke .2s ease;
+    stroke: var(--red);
+    transition: stroke .3s ease-in-out;
 }
 
 .todo-item__remove:hover path {
-  stroke: #bf0505;
+    stroke: #bf0505;
 }
 
 @media screen and (max-width: 476px) {
-  .todo-item {
-    grid-template-columns: 1fr .2fr 24px 24px;
-  }
+    .todo-item {
+        grid-template-columns: 1fr .2fr 24px 24px;
+    }
+}
+
+/* Dark theme */
+.dark-theme .todo-item {
+    color: var(--light);
+
+    &.completed {
+        background-color: var(--greenDark);
+    }
+}
+
+.dark-theme .todo-item__title span {
+    color: #c0bebe;
+}
+
+.dark-theme .todo-item__title {
+    color: var(--light);
 }

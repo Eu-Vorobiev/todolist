@@ -1,6 +1,6 @@
 import './ToDoItem.css';
 
-export default function ToDoItem({ task, onRemoveTask, onCompleteTask }) {
+const ToDoItem = ({ task, onRemoveTask, onCompleteTask }) => {
     return (
         <li className={`todo-item ${task.completed ? 'completed' : ''}`} key={task.id}>
             <div className="todo-item__title">
@@ -20,3 +20,5 @@ export default function ToDoItem({ task, onRemoveTask, onCompleteTask }) {
         </li>
     );
 }
+
+export default ToDoItem;

@@ -1,12 +1,18 @@
 .info-panel {
-  display: grid;
-  grid-template-columns: 1fr .65fr;
-  gap: 12px 10px;
-  margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1fr .65fr;
+    gap: 12px 10px;
+    margin-bottom: 16px;
+    color: #544f4f;
+    transition: color .3s ease-in-out;
 }
 
 .info-panel span {
-  font-size: 14px;
-  line-height: 16px;
-  color: #544f4f;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+/* Dark theme */
+.dark-theme .info-panel {
+    color: var(--light);
 }

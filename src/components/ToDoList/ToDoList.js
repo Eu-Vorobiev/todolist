@@ -4,7 +4,7 @@ import InfoPanel from '../InfoPanel/InfoPanel';
 import ToDoItem from '../ToDoItem/ToDoItem';
 import './ToDoList.css';
 
-export default function ToDoList({ tasks, addTask, removeTask, completeTask, duration, durationHandler, totalTime }) {
+const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, durationHandler, totalTime }) => {
     const [title, setTitle] = useState('');
     const firstInputFocusRef = useRef(null);
 
@@ -64,3 +64,5 @@ export default function ToDoList({ tasks, addTask, removeTask, completeTask, dur
         </div>
     );
 }
+
+export default ToDoList;

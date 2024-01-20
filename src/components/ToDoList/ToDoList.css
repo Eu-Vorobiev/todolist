@@ -22,4 +22,9 @@
     line-height: 24px;
     color: #888888;
     margin-top: 50px;
+    transition: color .3s ease-in-out;
+}
+
+.dark-theme .list__empty {
+    color: var(--light);
 }
