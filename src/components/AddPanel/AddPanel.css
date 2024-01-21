@@ -3,7 +3,10 @@
     grid-template-columns: 1fr .5fr 60px;
     gap: 12px 10px;
     align-items: center;
-    margin-bottom: 20px;
+    max-width: 750px;
+    width: 100%;
+    margin: 0 auto 20px;
+    padding: 0 5%;
 }
 
 .todo-add input {

@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import AddPanel from '../AddPanel/AddPanel';
 import InfoPanel from '../InfoPanel/InfoPanel';
 import ToDoItem from '../ToDoItem/ToDoItem';
+import FilterPanel from '../FilterPanel/FilterPanel';
 import './ToDoList.css';
 
-const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, durationHandler, totalTime }) => {
+const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, durationHandler, totalTime, changeFilter }) => {
     const [title, setTitle] = useState('');
     const firstInputFocusRef = useRef(null);
 
@@ -61,6 +62,8 @@ const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, duration
                     <p className="list__empty">No tasks</p>
                 )}
             </ul>
+
+            <FilterPanel changeFilter={changeFilter} />
         </div>
     );
 }

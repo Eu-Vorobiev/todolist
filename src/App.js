@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import ThemeContext from './components/ThemeContext/ThemeContext';
 import Header from './components/Header/Header';
-import Container from './components/Container/Container';
 import ToDoList from './components/ToDoList/ToDoList';
 import { getDate } from './components/Date/Date';
 
 export default function App() {
 	const [tasks, setTasks] = useState([]);
+	const [filter, setFilter] = useState('all');
 	const { hours, minutes, ampm } = getDate();
 	const [duration, setDuration] = useState(0);
 	const [totalTime, setTotalTime] = useState(0);
 	const [theme, setTheme] = useState('light-theme');
 	const toggleTheme = () => setTheme(theme === 'light-theme' ? 'dark-theme' : 'light-theme');
+	let filteredTasks = tasks;
 
 	const addTask = ({ title, duration, completed = false }) => {
 		let dividedDuration = duration / 60;
@@ -59,22 +60,30 @@ export default function App() {
 
 	const durationHandler = e => setDuration(parseInt(e.currentTarget.value));
 
+	const changeFilter = filter => setFilter(filter);
+
+	if (filter === 'in-progress') {
+		filteredTasks = tasks.filter(task => !task.completed);
+	}
+	if (filter === 'completed') {
+		filteredTasks = tasks.filter(task => task.completed);
+	}
+
 	return (
 		<ThemeContext.Provider value={{ theme, toggleTheme }}>
-            {/* Lib for add a classname on body */}
-            <Helmet bodyAttributes={{class: theme}} />
+			{/* Lib for add a classname on body */}
+			<Helmet bodyAttributes={{ class: theme }} />
 			<Header />
-			<Container>
-				<ToDoList
-					tasks={tasks}
-					addTask={addTask}
-					removeTask={removeTask}
-					completeTask={completeTask}
-					duration={duration}
-					durationHandler={durationHandler}
-					totalTime={totalTime}
-				/>
-			</Container>
+			<ToDoList
+				tasks={filteredTasks}
+				addTask={addTask}
+				removeTask={removeTask}
+				completeTask={completeTask}
+				duration={duration}
+				durationHandler={durationHandler}
+				totalTime={totalTime}
+				changeFilter={changeFilter}
+			/>
 		</ThemeContext.Provider>
 	);
 }

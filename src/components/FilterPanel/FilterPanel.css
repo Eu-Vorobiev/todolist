@@ -1,0 +1,65 @@
+.filter-panel {
+	margin-top: auto;
+	border-top: 1px solid var(--green);
+	position: sticky;
+	top: 0;
+	height: fit-content;
+}
+
+.filter-panel__list {
+	max-width: 750px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 30px 5%;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+}
+
+.filter-panel__button {
+	cursor: pointer;
+	padding: 8px 16px;
+	border-radius: 4px;
+	border: 1px solid var(--dark);
+	background-color: var(--white);
+	color: var(--dark);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	letter-spacing: 0.25px;
+	text-transform: uppercase;
+	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+	&.filter-panel__button--active {
+		background-color: var(--dark);
+		color: var(--white);
+	}
+}
+
+@media (any-hover: hover) {
+	.filter-panel__button:not(.filter-panel__button--active):hover {
+		background-color: var(--dark);
+		color: var(--white);
+	}
+}
+
+.dark-theme .filter-panel__button {
+	border-color: var(--light);
+	background-color: var(--dark);
+	color: var(--light);
+
+	&.filter-panel__button--active {
+		background-color: var(--green);
+		border-color: var(--green);
+	}
+}
+
+@media (any-hover: hover) {
+	.dark-theme .filter-panel__button:not(.filter-panel__button--active):hover {
+		background-color: var(--greenDark);
+		color: var(--white);
+	}
+}
