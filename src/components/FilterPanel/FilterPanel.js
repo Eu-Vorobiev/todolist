@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import './FilterPanel.css';
 
 const FilterPanel = ({ changeFilter }) => {
-	const statuses = ['all', 'in-progress', 'completed'];
+    const statuses = ['all', 'in-progress', 'completed'];
+    const [activeFilter, setActiveFilter] = useState('all');
 
-    const handleFilterClick = e => {
-        const buttons = document.querySelectorAll('.filter-panel__button');
-        buttons.forEach(button => button.classList.remove('filter-panel__button--active'));
-        e.currentTarget.classList.add('filter-panel__button--active');
+    const handleFilterClick = (status) => {
+        setActiveFilter(status);
+        changeFilter(status);
     }
 	return (
 		<div className="filter-panel">
@@ -15,11 +16,8 @@ const FilterPanel = ({ changeFilter }) => {
 					return (
                         <li key={status} >
 							<button
-                                className="filter-panel__button"
-                                onClick={(e) => {
-                                    handleFilterClick(e)
-                                    changeFilter(status)
-                                }}
+                                className={`filter-panel__button ${activeFilter === status ? 'filter-panel__button--active' : ''}}`}
+                                onClick={() => handleFilterClick(status)}
 							>
 								{status}
 							</button>

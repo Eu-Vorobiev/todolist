@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import AddPanel from '../AddPanel/AddPanel';
 import InfoPanel from '../InfoPanel/InfoPanel';
 import ToDoItem from '../ToDoItem/ToDoItem';
@@ -10,24 +10,28 @@ const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, duration
     const firstInputFocusRef = useRef(null);
 
     const titleHandler = (e) => setTitle(e.currentTarget.value);
+    const isValidInput = () => title !== '' && duration !== 0 && duration !== '';
 
     const onAddTask = () => {
-        if (title === '' || duration === '' || duration === 0) return;
+        if (!isValidInput()) return;
         addTask({ title, duration });
         setTitle('');
         firstInputFocusRef.current.focus();
     };
 
     const onKeyPressHandler = (e) => {
-        if (
-            e.key === 'Enter' &&
-            title !== '' &&
-            duration !== 0 &&
-            duration !== ''
-        ) {
+        if (e.key === 'Enter' && isValidInput()) {
             onAddTask();
         }
     };
+
+    const onRemoveTask = useCallback((task) => () => {
+        removeTask(task);
+    }, [removeTask]);
+    
+    const onCompleteTask = useCallback((task) => () => {
+        completeTask(task);
+    }, [completeTask]);
 
     useEffect(() => {
         if (firstInputFocusRef.current) {
@@ -44,17 +48,13 @@ const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, duration
             <ul className="list">
                 {tasks.length !== 0 ? (
                     tasks.map((task) => {
-                        const onRemoveTask = () => removeTask(task);
-
-                        const onCompleteTask = () => completeTask(task);
-
                         return (
                             <ToDoItem
                                 task={task}
                                 key={task.id}
                                 totalTime={totalTime}
-                                onRemoveTask={onRemoveTask}
-                                onCompleteTask={onCompleteTask}
+                                onRemoveTask={onRemoveTask(task)}
+                                onCompleteTask={onCompleteTask(task)}
                             />
                         );
                     })
