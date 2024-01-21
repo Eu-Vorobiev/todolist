@@ -16,7 +16,7 @@ const FilterPanel = ({ changeFilter }) => {
 					return (
                         <li key={status} >
 							<button
-                                className={`filter-panel__button ${activeFilter === status ? 'filter-panel__button--active' : ''}}`}
+                                className={`filter-panel__button ${activeFilter === status ? 'filter-panel__button--active' : ''}`}
                                 onClick={() => handleFilterClick(status)}
 							>
 								{status}
