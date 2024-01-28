@@ -20,8 +20,8 @@ export default function App() {
 			let dividedDuration = duration / 60;
 			let formattedDuration =
 				duration >= 10
-					? parseFloat(dividedDuration.toFixed(2))
-					: Number(duration);
+				? parseFloat((dividedDuration).toFixed(2))
+				: Number(duration);
 			let formattedDate = `${hours}:${minutes} ${ampm}`;
 
 			let newTask = {
@@ -62,9 +62,9 @@ export default function App() {
 
 	const totalTimeHandler = (total, current, hasAdd = true) => {
 		let newTotalTime = hasAdd
-			? (total + current).toFixed(2)
-			: (total - current).toFixed(2);
-		return parseFloat(newTotalTime);
+			? total + current
+			: total - current
+		return parseFloat(newTotalTime.toFixed(2));
 	};
 
 	const durationHandler = e => setDuration(parseInt(e.currentTarget.value));
@@ -79,6 +79,8 @@ export default function App() {
 		if (filter === 'completed') {
 			newFilteredTasks = tasks.filter(task => task.completed);
 		}
+		const updatedTime = newFilteredTasks.reduce((total, task) => total + task.duration, 0);
+		setTotalTime(updatedTime);
 		setFilteredTasks(newFilteredTasks);
 	}, [tasks, filter]);
 

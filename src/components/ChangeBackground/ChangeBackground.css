@@ -1,0 +1,68 @@
+.background-switch {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	transform: translateY(-100%);
+	transition: transform 0.3s ease-in-out;
+
+	&.active {
+		transform: translateY(0);
+	}
+}
+
+.background-switch label {
+	cursor: pointer;
+	padding: 18px 40px;
+	margin: 0 10px;
+	backdrop-filter: blur(10px);
+	border-radius: 5px;
+	background-color: rgba(10, 41, 1, 0.5);
+	border: 2px double var(--white);
+	font-size: 16px;
+	line-height: 1.4;
+	text-align: center;
+	color: var(--white);
+	transition: background-color 0.3s ease-in-out;
+
+	@media (any-hover: hover) {
+		&:hover {
+			background-color: rgba(10, 41, 1, 0.8);
+		}
+	}
+}
+
+.background-switch input {
+	display: none;
+}
+
+.background-switch span {
+	user-select: none;
+}
+
+.background-switch__reset {
+	padding: 8px 14px;
+	border-radius: 5px;
+	backdrop-filter: blur(10px);
+	background-color: rgba(10, 41, 1, 0.5);
+	border: 1px double var(--green);
+	color: var(--white);
+	cursor: pointer;
+	transition: background-color 0.3s ease-in-out;
+
+	@media (any-hover: hover) {
+		&:hover {
+			background-color: rgba(10, 41, 1, 0.8);
+		}
+	}
+}
