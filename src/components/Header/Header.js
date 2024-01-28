@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback, useMemo } from 'react';
 import ThemeContext from '../ThemeContext/ThemeContext';
 import ChangeBackground from '../ChangeBackground/ChangeBackground';
 import ThemeToggler from '../ThemeToggler/ThemeToggler';
@@ -7,37 +7,42 @@ import './Header.css';
 
 const Header = () => {
 	const [hoverChangeBg, setHoverChangeBg] = useState(false);
-    const [userBackground, setUserBackground] = useState(localStorage.getItem('background'));
+	const [userBackground, setUserBackground] = useState(localStorage.getItem('background'));
 	const { toggleTheme } = useContext(ThemeContext);
 
-	const handleMouseEnter = () => {
-		setTimeout(() => {
+	const handleMouseEnter = useCallback(() => {
+		const timer = setTimeout(() => {
 			setHoverChangeBg(true);
 		}, 200);
-	};
+		return () => clearTimeout(timer);
+	}, []);
 
-	const handleMouseLeave = () => setHoverChangeBg(false);
-    
-	const changeBG = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            const base64String = reader.result;
-            localStorage.setItem('background', base64String);
-            setUserBackground(base64String);
-        };
-    };
+	const handleMouseLeave = useCallback(() => setHoverChangeBg(false), []);
 
-	const resetBg = () => {
+	const changeBG = useCallback((event) => {
+		const file = event.target.files[0];
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = () => {
+			const base64String = reader.result;
+			localStorage.setItem('background', base64String);
+			setUserBackground(base64String);
+		};
+	}, []);
+
+	const resetBg = useCallback(() => {
 		localStorage.removeItem('background');
 		setUserBackground(null);
-	};
+	}, []);
+
+	const headerStyle = useMemo(() => (
+		userBackground ? { style: { backgroundImage: `url(${userBackground})` } } : {}
+	), [userBackground]);
 
 	return (
 		<header
 			className="header"
-			{...(userBackground ? { style: { backgroundImage: `url(${userBackground})` } } : {})}
+			{...headerStyle}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
