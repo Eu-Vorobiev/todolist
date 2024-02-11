@@ -6,6 +6,8 @@ const ThemeToggler = ({ toggleTheme }) => {
 			htmlFor="theme-toogler"
 			className="theme-toggler"
 			title="Switch the theme"
+			onMouseOver={(event) => event.stopPropagation()}
+			onMouseOut={(event) => event.stopPropagation()}
 		>
 			<input
 				type="checkbox"

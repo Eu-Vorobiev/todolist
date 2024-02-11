@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback, useMemo } from 'react';
+import { useState, useContext, useCallback, useMemo, useRef } from 'react';
 import ThemeContext from '../ThemeContext/ThemeContext';
 import ChangeBackground from '../ChangeBackground/ChangeBackground';
 import ThemeToggler from '../ThemeToggler/ThemeToggler';
@@ -9,17 +9,20 @@ const Header = () => {
 	const [hoverChangeBg, setHoverChangeBg] = useState(false);
 	const [userBackground, setUserBackground] = useState(localStorage.getItem('background'));
 	const { toggleTheme } = useContext(ThemeContext);
+	const timerRef = useRef(null);
 
 	const handleMouseEnter = useCallback(() => {
-		const timer = setTimeout(() => {
+		timerRef.current = setTimeout(() => {
 			setHoverChangeBg(true);
-		}, 200);
-		return () => clearTimeout(timer);
+		}, 3000);
 	}, []);
 
-	const handleMouseLeave = useCallback(() => setHoverChangeBg(false), []);
+	const handleMouseLeave = useCallback(() => {
+		clearTimeout(timerRef.current);
+		setHoverChangeBg(false);
+	}, []);
 
-	const changeBG = useCallback((event) => {
+	const changeBG = useCallback(event => {
 		const file = event.target.files[0];
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
@@ -46,7 +49,11 @@ const Header = () => {
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<ChangeBackground hoverChangeBg={hoverChangeBg} changeBG={changeBG} resetBg={resetBg} />
+			<ChangeBackground
+				hoverChangeBg={hoverChangeBg}
+				changeBG={changeBG}
+				resetBg={resetBg}
+			/>
 			<ThemeToggler toggleTheme={toggleTheme} />
 			<CurrentDate />
 		</header>

@@ -5,7 +5,7 @@ import ToDoItem from '../ToDoItem/ToDoItem';
 import FilterPanel from '../FilterPanel/FilterPanel';
 import './ToDoList.css';
 
-const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, durationHandler, totalTime, changeFilter }) => {
+const ToDoList = ({ tasks, addTask, removeTask, completeTask, editTask, hoverTaskHandler, duration, durationHandler, totalTime, changeFilter }) => {
     const [title, setTitle] = useState('');
     const firstInputFocusRef = useRef(null);
 
@@ -33,6 +33,10 @@ const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, duration
         completeTask(task);
     }, [completeTask]);
 
+    const onHoverTaskHandler = useCallback((task) => {
+        hoverTaskHandler(task);
+    }, [hoverTaskHandler]);
+
     useEffect(() => {
         if (firstInputFocusRef.current) {
             firstInputFocusRef.current.focus();
@@ -55,6 +59,8 @@ const ToDoList = ({ tasks, addTask, removeTask, completeTask, duration, duration
                                 totalTime={totalTime}
                                 onRemoveTask={onRemoveTask(task)}
                                 onCompleteTask={onCompleteTask(task)}
+                                onEditTask={(newTitle, newDuration) => editTask(task, newTitle, newDuration)}
+                                onHoverTaskHandler={onHoverTaskHandler.bind(null, task)}
                             />
                         );
                     })

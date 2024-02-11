@@ -1,20 +1,24 @@
 :root {
     --black: #0D0D0D;
+    --purple: #6924d2;
 }
 
 .todo-item {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr .45fr 24px 24px;
     align-items: center;
     gap: 14px;
     padding: 4px 10px;
     border-radius: 5px;
+    border-left: 3px solid var(--purple);
     background-color: transparent;
     color: var(--black);
-    transition: background-color .3s ease-in-out, color .3s ease-in-out;
+    transition: background-color .3s ease-in-out, color .3s ease-in-out, border-color .3s ease-in-out;
 
     &.completed {
         background-color: #b8efdf;
+        border-left-color: #20EEB0;
     }
 }
 
@@ -80,6 +84,60 @@
     stroke: #bf0505;
 }
 
+.todo-item__edit {
+    cursor: pointer;
+    position: absolute;
+    top: 46%;
+    right: -22px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+
+    &.todo-item__edit--active {
+        opacity: 1;
+    }
+}
+
+.todo-item__edit path {
+    fill: var(--purple);
+    transition: fill .3s ease-in-out;
+}
+
+.todo-item__edit:hover path {
+    fill: #5f1f9d;
+}
+
+.edit-input {
+    outline: none;
+    width: 100%;
+    border: 1px solid transparent;
+    background: #EBEFF2;
+    border-radius: 5px;
+    padding: 4px 6px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #544f4f;
+    transition: border-color .3s ease-in-out, background-color .3s ease-in-out, color .3s ease-in-out;
+
+    &::placeholder {
+        color: #888888;
+        transition: color .3s ease-in-out;
+    }
+
+    @media (any-hover: hover) {
+
+        &:hover,
+        &:focus {
+            border-color: #888888;
+        }
+    }
+}
+
 @media screen and (max-width: 476px) {
     .todo-item {
         grid-template-columns: 1fr .2fr 24px 24px;
@@ -101,4 +159,8 @@
 
 .dark-theme .todo-item__title {
     color: var(--light);
+}
+
+.dark-theme .todo-item__edit:hover path {
+    fill: #8e65b6;
 }

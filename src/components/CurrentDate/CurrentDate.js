@@ -23,7 +23,11 @@ const CurrentDate = () => {
 	}, []);
 
 	return (
-		<time>
+		<time 
+			className="datetime"
+			onMouseOver={(event) => event.stopPropagation()}
+			onMouseOut={(event) => event.stopPropagation()}
+		>
 			<span className="day">
 				{dayNameState} {dayNumState}
 			</span>

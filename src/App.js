@@ -16,7 +16,7 @@ export default function App() {
 	const toggleTheme = () => setTheme(theme === 'light-theme' ? 'dark-theme' : 'light-theme');
 
 	const addTask = useCallback(
-		({ title, duration, completed = false }) => {
+		({ title, duration, completed = false, isEdit = false, isHover = false }) => {
 			let dividedDuration = duration / 60;
 			let formattedDuration =
 				duration >= 10
@@ -30,6 +30,8 @@ export default function App() {
 				duration: formattedDuration,
 				date: formattedDate,
 				completed,
+				isEdit,
+				isHover
 			};
 			let newTasks = [newTask, ...tasks];
 			setTasks(newTasks);
@@ -53,9 +55,27 @@ export default function App() {
 	const completeTask = useCallback(
 		task => {
 			let newTasks = tasks.map(t => 
-				t.id === task.id ? { ...t, completed: !t.completed } : t
+				t.id === task.id ? { ...t, completed: !t.completed, isHover: false } : t
 			);
 			newTasks.sort((a, b) => a.completed - b.completed);
+			setTasks(newTasks);
+		}, [tasks]
+	);
+
+	const editTask = useCallback(
+		(task, newTitle, newDuration) => {
+			let newTasks = tasks.map(t =>
+				t.id === task.id ? { ...t, isEdit: !task.isEdit, title: newTitle, duration: newDuration } : t
+			);
+			setTasks(newTasks);
+		}, [tasks]
+	);
+
+	const hoverTaskHandler = useCallback(
+		task => {
+			let newTasks = tasks.map(t =>
+				t.id === task.id ? { ...t, isHover: !t.isHover } : t
+			);
 			setTasks(newTasks);
 		}, [tasks]
 	);
@@ -94,6 +114,8 @@ export default function App() {
 				addTask={addTask}
 				removeTask={removeTask}
 				completeTask={completeTask}
+				hoverTaskHandler={hoverTaskHandler}
+				editTask={editTask}
 				duration={duration}
 				durationHandler={durationHandler}
 				totalTime={totalTime}
