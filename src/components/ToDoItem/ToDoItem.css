@@ -81,6 +81,7 @@
 
 .todo-item__remove {
     stroke: var(--red);
+    fill: none;
     transition: stroke .3s ease-in-out;
 }
 
