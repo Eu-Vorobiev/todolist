@@ -4,8 +4,9 @@ import './ToDoItem.css';
 const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskHandler }) => {
 	const [editedTitle, setEditedTitle] = useState(task.title);
 	const [editedDuration, setEditedDuration] = useState(task.duration);
+	const [isEdit, setIsEdit] = useState(false);
 
-    const handleEditBtnClick = () => { task.isEdit = !task.isEdit }
+    const handleEditBtnClick = () => { setIsEdit(!isEdit) }
 	
     const handleEditTask = () => { onEditTask(editedTitle, editedDuration) };
 
@@ -17,15 +18,24 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 		}
 	};
 
+	const handleMouseEnter = () => { onHoverTaskHandler(true) };
+	
+	const handleMouseLeave = () => { onHoverTaskHandler(false) };
+
+	const handleCompleteTask = () => {
+		onCompleteTask();
+		onHoverTaskHandler(false);
+	};
+
 	return (
 		<li
 			className={`todo-item ${task.completed ? 'completed' : ''}`}
 			key={task.id}
-			onMouseEnter={onHoverTaskHandler}
-			onMouseLeave={onHoverTaskHandler}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
 		>
 			<div className="todo-item__title">
-				{task.isEdit ? (
+				{isEdit ? (
 					<input
                         className="edit-input"
 						type="text"
@@ -40,7 +50,7 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 				<span>at {task.date}</span>
 			</div>
 			<div className="todo-item__duration">
-				{task.isEdit ? (
+				{isEdit ? (
 					<input
                         className="edit-input"
 						type="number"
@@ -58,7 +68,7 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 					type="checkbox"
 					name="task-done"
 					checked={task.completed}
-					onChange={onCompleteTask}
+					onChange={handleCompleteTask}
 				/>
 				<span onClick={onCompleteTask}></span>
 			</label>
@@ -68,10 +78,7 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 				onClick={onRemoveTask}
 			>
 				<svg
-					width="24"
-					height="24"
 					viewBox="0 0 24 24"
-					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
@@ -83,16 +90,13 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 				</svg>
 			</button>
 			<button
-				className={`todo-item__edit ${task.isHover || task.isEdit ? 'todo-item__edit--active' : ''}`}
+				className={`todo-item__edit ${task.isHover || isEdit ? 'todo-item__edit--active' : ''}`}
 				type="button"
 				onClick={handleEditBtnClick}
 			>
-				{task.isEdit ? (
+				{isEdit ? (
 					<svg
-						width="24"
-						height="24"
 						viewBox="0 0 71 56"
-						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path
@@ -101,10 +105,7 @@ const ToDoItem = ({ task, onRemoveTask, onCompleteTask, onEditTask, onHoverTaskH
 					</svg>
 				) : (
 					<svg
-						width="24"
-						height="24"
 						viewBox="0 0 72 71"
-						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path

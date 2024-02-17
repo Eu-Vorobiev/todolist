@@ -22,6 +22,10 @@
     }
 }
 
+.todo-item.completed:hover .todo-item__edit {
+    opacity: 1;
+}
+
 .todo-item__title {
     font-weight: 500;
     font-size: 18px;
@@ -88,7 +92,7 @@
     cursor: pointer;
     position: absolute;
     top: 46%;
-    right: -22px;
+    right: -26px;
     transform: translateY(-50%);
     display: flex;
     align-items: center;

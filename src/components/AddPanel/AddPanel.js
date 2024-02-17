@@ -1,6 +1,12 @@
 import './AddPanel.css';
 
 const AddPanel = ({ title, duration, titleHandler, durationHandler, onAddTask, onKeyPressHandler, firstInputFocusRef }) => {
+    const handleDurationChange = (event) => {
+        let value = event.target.value;
+        value = value.replace(/[^0-9.]/g, '');
+        durationHandler({ ...event, target: { ...event.target, value } });
+    };
+
     return (
         <div className="todo-add">
             <label htmlFor="task">
@@ -16,12 +22,13 @@ const AddPanel = ({ title, duration, titleHandler, durationHandler, onAddTask, o
             </label>
             <label htmlFor="duration">
                 <input
-                    type="number"
+                    type="text"
                     name="duration"
                     placeholder="0"
                     autoComplete='off'
+                    title="Only numbers and dot"
                     value={duration}
-                    onChange={durationHandler}
+                    onChange={handleDurationChange}
                     onKeyUp={onKeyPressHandler}
                 />
             </label>

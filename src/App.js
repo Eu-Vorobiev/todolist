@@ -15,14 +15,21 @@ export default function App() {
 	const [theme, setTheme] = useState('light-theme');
 	const toggleTheme = () => setTheme(theme === 'light-theme' ? 'dark-theme' : 'light-theme');
 
+	const formatDuration = (duration) => {
+		if (String(duration).includes('.')) {
+			let [hours, minutes] = String(duration).split('.');
+			let totalHours = Number(hours) + Number(minutes) / 60;
+			return parseFloat(totalHours.toFixed(2));
+		} else {
+			let totalHours = Number(duration) / 60;
+			return parseFloat(totalHours.toFixed(2));
+		}
+	};
+
 	const addTask = useCallback(
 		({ title, duration, completed = false, isEdit = false, isHover = false }) => {
-			let dividedDuration = duration / 60;
-			let formattedDuration =
-				duration >= 10
-				? parseFloat((dividedDuration).toFixed(2))
-				: Number(duration);
-			let formattedDate = `${hours}:${minutes} ${ampm}`;
+			const formattedDuration = formatDuration(duration);
+			const formattedDate = `${hours}:${minutes} ${ampm}`;
 
 			let newTask = {
 				id: Math.random(),
@@ -55,7 +62,7 @@ export default function App() {
 	const completeTask = useCallback(
 		task => {
 			let newTasks = tasks.map(t => 
-				t.id === task.id ? { ...t, completed: !t.completed, isHover: false } : t
+				t.id === task.id ? { ...t, completed: !t.completed } : t
 			);
 			newTasks.sort((a, b) => a.completed - b.completed);
 			setTasks(newTasks);
@@ -64,8 +71,9 @@ export default function App() {
 
 	const editTask = useCallback(
 		(task, newTitle, newDuration) => {
+			const formattedDuration = formatDuration(newDuration);
 			let newTasks = tasks.map(t =>
-				t.id === task.id ? { ...t, isEdit: !task.isEdit, title: newTitle, duration: newDuration } : t
+				t.id === task.id ? { ...t, isEdit: !task.isEdit, title: newTitle, duration: formattedDuration } : t
 			);
 			setTasks(newTasks);
 		}, [tasks]
@@ -87,7 +95,10 @@ export default function App() {
 		return parseFloat(newTotalTime.toFixed(2));
 	};
 
-	const durationHandler = e => setDuration(parseInt(e.currentTarget.value));
+	const durationHandler = (e) => {
+		const value = e.currentTarget.value;
+		setDuration(value === '' ? 0 : parseInt(value));
+	}
 
 	const changeFilter = useCallback(filter => setFilter(filter), []);
 
